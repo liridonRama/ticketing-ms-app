@@ -4,5 +4,7 @@ export const signoutRouter = Router();
 
 
 signoutRouter.get("/api/users/signout", (req, res) => {
-  res.send("Hello")
+  req.session = null;
+
+  res.status(200).end();
 })
