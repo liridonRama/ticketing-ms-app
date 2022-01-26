@@ -1,11 +1,11 @@
-import { CustomErrorMessage } from './custom-error-message';
-
 export abstract class CustomError extends Error {
-  public abstract statusCode: number;
+  abstract statusCode: number;
 
-  constructor(msg: string) {
-    super(msg)
+  constructor(message: string) {
+    super(message);
+
+    Object.setPrototypeOf(this, CustomError.prototype);
   }
 
-  public abstract serializeErrors(): CustomErrorMessage[];
+  abstract serializeErrors(): { message: string; field?: string }[];
 }

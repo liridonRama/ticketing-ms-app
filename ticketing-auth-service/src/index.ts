@@ -1,45 +1,22 @@
-import express from "express";
-import { json } from "body-parser";
-import mongoose from "mongoose";
-import cookieSession from 'cookie-session';
+import mongoose from 'mongoose';
 
-import { currentUserRouter, globalRouter, signinRouter, signoutRouter, signupRouter } from "./routes"
-import { errorHandler } from './middlewares/error-handler';
-
-
-const app = express();
-app.set('trust proxy', true);
-
-app.use(json())
-app.use(cookieSession({
-  signed: false,
-  secure: true,
-  httpOnly: true,
-}));
-
-app.use(currentUserRouter)
-app.use(signinRouter)
-app.use(signoutRouter)
-app.use(signupRouter)
-
-app.use(globalRouter);
-
-
-app.use(errorHandler)
+import { app } from './app';
 
 const start = async () => {
-  try {
-    if (!process.env.JWT_KEY) {
-      throw new Error("jwt must be defined");
-    }
-
-    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth")
-    console.log("connected to mongodb")
-    app.listen(3000, () => console.log('listening on port 3000'))
-
-  } catch (error) {
-    console.log(error)
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY must be defined');
   }
-}
+
+  try {
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
+    console.log('Connected to MongoDb');
+  } catch (err) {
+    console.error(err);
+  }
+
+  app.listen(3000, () => {
+    console.log('Listening on port 3000!!!!!!!!');
+  });
+};
 
 start();
