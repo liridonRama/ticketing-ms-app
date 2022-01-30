@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ticketing-auth-service-depl
+  name: tickets-srv-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ticketing-auth-service
+      app: tickets-srv
   template:
     metadata:
       labels:
-        app: ticketing-auth-service
+        app: tickets-srv
     spec:
       containers:
-        - name: ticketing-auth-service
-          image: liridonrama/ticketing-auth-service
+        - name: tickets-srv
+          image: liridonrama/tickets-srv
           env:
             - name: JWT_KEY
               valueFrom:
@@ -22,15 +22,15 @@ spec:
                   name: jwt-secret
                   key: JWT_KEY
             - name: MONGO_URI
-              value: mongodb://auth-mongo-srv:27017/auth
+              value: mongodb://tickets-srv-mongo-srv:27017/tickets
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ticketing-auth-service-srv
+  name: tickets-srv-srv
 spec:
   selector:
-    app: ticketing-auth-service
+    app: tickets-srv
   ports:
     - name:
       protocol: TCP
