@@ -1,9 +1,9 @@
-import { OrderCreatedEvent, OrderStatus, Subjects, TicketUpdatedEvent } from '@ticketing-lr/common';
+import { OrderCreatedEvent, OrderStatus } from '@ticketing-lr/common';
 import { Types } from 'mongoose';
 import { Message } from 'node-nats-streaming';
 import { Ticket } from '../../../models/tickets';
-import { natsWrapper } from '../../../nats-wrapper'
-import { OrderCreatedListener } from '../order-created-listener'
+import { natsWrapper } from '../../../nats-wrapper';
+import { OrderCreatedListener } from '../order-created-listener';
 
 const setup = async () => {
   const listener = new OrderCreatedListener(natsWrapper.client);
