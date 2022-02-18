@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { NotFoundError, validateRequest, requireAuth, NotAuthorizedError } from '@ticketing-lr/common';
+import { NotFoundError, validateRequest, requireAuth, NotAuthorizedError, BadRequestError } from '@ticketing-lr/common';
 import { Ticket } from '../models/tickets';
 import { body } from 'express-validator';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
@@ -17,6 +17,10 @@ router.put('/api/tickets/:id', requireAuth, validation, validateRequest, async (
 
   if (!ticket) {
     throw new NotFoundError();
+  }
+
+  if (!!ticket.orderId) {
+    throw new BadRequestError("ticket is already reserved");
   }
 
   if (ticket.userId !== req.currentUser!.id) {
