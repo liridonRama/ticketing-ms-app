@@ -15,7 +15,7 @@ export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
     });
 
     if (!order) {
-      throw new Error('Oder not found');
+      throw new Error('Order not found');
     }
 
     order.set({ status: OrderStatus.Cancelled });
