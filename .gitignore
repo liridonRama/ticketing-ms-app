@@ -1,2 +1,4 @@
 node_modules
 cmd.sh
+.env
+.env.local
