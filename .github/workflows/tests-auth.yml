@@ -1,4 +1,4 @@
-name: Tests
+name: tests-auth
 
 on:
   pull_request
@@ -9,6 +9,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: cd ticketing-auth-service && npm i && npm run test:ci
-      - run: cd orders && npm i && npm run test:ci
-      - run: cd tickets-srv && npm i && npm run test:ci
-      - run: cd payments && npm i && npm run test:ci
+  
