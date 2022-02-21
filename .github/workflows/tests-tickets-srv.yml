@@ -9,5 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd tests-tickets-srv && npm i && npm run test:ci
+      - run: cd tickets-srv && npm i && npm run test:ci
   
