@@ -1,0 +1,26 @@
+
+name: deploy-auth
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ticketing-auth-service/**'
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd ticketing-auth-service && docker build -t liridonrama/ticketing-auth-service .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push liridonrama/ticketing-auth-service
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save k8s-1-21-9-do-0-fra1-1645560297151
+      - run: kubectl rollout restart deployment ticketing-auth-service-depl
