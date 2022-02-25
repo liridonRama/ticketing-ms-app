@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'orderse/**'
+      - 'orders/**'
       
 jobs:
   build:
