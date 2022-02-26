@@ -17,9 +17,10 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker push liridonrama/tickets-srv
-      - uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - run: doctl kubernetes cluster kubeconfig save k8s-1-21-9-do-0-fra1-1645560297151
-      - run: kubectl rollout restart deployment tickets-srv-depl
+      # use if you want to deploy to remote k8s cluster in digital ocean 
+      # - run: docker push liridonrama/tickets-srv
+      # - uses: digitalocean/action-doctl@v2
+      #   with:
+      #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      # - run: doctl kubernetes cluster kubeconfig save k8s-1-21-9-do-0-fra1-1645560297151
+      # - run: kubectl rollout restart deployment tickets-srv-depl
